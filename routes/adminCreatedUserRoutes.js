@@ -20,32 +20,31 @@ const {
 const authMiddleware = require("../middleware/authMiddleware");
 
 // USER ROUTES
-router.post("/create",authMiddleware, createUser);
+router.post("/create", createUser);
 router.get("/all", getAllUsers);
 router.post("/login", loginUser);
 router.put("/update/:id", updateUser);
 router.delete("/delete/:id", deleteUser);
 
 // COMPLAINT ROUTES
-router.post("/complaints/create", authMiddleware, createComplaint);
+router.post("/complaints/create", createComplaint);
 
-router.get("/complaints/all", authMiddleware, getAllComplaints);
+router.get("/complaints/all", getAllComplaints);
 
 router.get(
   "/complaints/:complaintId",
-  authMiddleware,
   getComplaintById
 );
 
 router.put(
   "/complaints/update/:complaintId",
-  authMiddleware,
+
   updateComplaint
 );
 
 router.delete(
   "/complaints/delete/:complaintId",
-  authMiddleware,
+  
   deleteComplaint
 );
 module.exports=router;
