@@ -40,7 +40,22 @@ app.use(
 app.use(express.json());
 app.use("/api/admin-auth", adminAuthRoutes);
 // Admin Password Verification
+app.post("/api/admin/verify-password", (req, res) => {
+  const { password } = req.body;
+  const ADMIN_SECRET = process.env.ADMIN_PASSWORD || "my";
 
+  if (password === ADMIN_SECRET) {
+    return res.status(200).json({
+      success: true,
+      message: "Access Granted",
+    });
+  }
+
+  return res.status(401).json({
+    success: false,
+    message: "Invalid Password",
+  });
+});
 
 // API Routes
 app.use("/api/admin/analytics", require("./routes/adminAnalytics"));
