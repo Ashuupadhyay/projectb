@@ -49,17 +49,28 @@ exports.createUser = async (req, res) => {
       password: hashedPassword,
     });
 
+    const token = jwt.sign(
+  {
+    id: user._id,
+    userId: user.userId,
+    role: user.role,
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: "7d" }
+);
+
     return res.status(201).json({
-      success: true,
-      message: "User created successfully",
-      data: {
-        userId: user.userId,
-        name: user.name,
-        mobile: user.mobile,
-        email: user.email,
-        password,
-      },
-    });
+  success: true,
+  message: "User created successfully",
+  token,
+  data: {
+    userId: user.userId,
+    name: user.name,
+    mobile: user.mobile,
+    email: user.email,
+    password,
+  },
+});
   } catch (error) {
     if (error.code === 11000) {
       return res.status(409).json({
